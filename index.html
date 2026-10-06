@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Novel Interaktif - Misteri Perpustakaan Tua</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #0b0813;
+      color: #e0e0e0;
+      font-family: 'VT323', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 15px;
+    }
+
+    /* CONTAINER UTAMA GAME */
+    .game-container {
+      width: 100%;
+      max-width: 600px;
+      background: #161124;
+      border: 4px solid #8a2be2;
+      box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* HEADER STATUS (HP & INVENTARIS) */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 8px 12px;
+      border: 2px solid #332255;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      color: #00ffcc;
+    }
+
+    /* TAMPILAN GAMBAR ADEGAN */
+    .scene-image-box {
+      width: 100%;
+      height: 200px;
+      border: 2px solid #8a2be2;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .scene-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* KOTAK NARASI TULISAN */
+    .story-box {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #4d2d80;
+      padding: 15px;
+      border-radius: 6px;
+      min-height: 120px;
+      font-size: 1.3rem;
+      line-height: 1.4;
+      color: #fff;
+    }
+
+    /* DAFTAR TOMBOL PILIHAN */
+    .choices-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-choice {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.65rem;
+      padding: 12px 15px;
+      background: #25183e;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      line-height: 1.5;
+      transition: all 0.2s ease;
+    }
+
+    .btn-choice:hover, .btn-choice:active {
+      background: #8a2be2;
+      color: #fff;
+      border-color: #fff;
+      transform: translateX(4px);
+    }
+
+    /* KONTROL RESTART */
+    .control-box {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-reset {
+      font-family: 'VT323', monospace;
+      font-size: 1.1rem;
+      background: transparent;
+      color: #ff3366;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <!-- BAR STATUS -->
+    <div class="status-bar">
+      <span>❤️ HP: <span id="hpValue">100</span></span>
+      <span>🎒 Item: <span id="itemValue">Kosong</span></span>
+    </div>
+
+    <!-- GAMBAR ADEGAN -->
+    <div class="scene-image-box">
+      <img id="sceneImg" src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=600" alt="Adegan Game">
+    </div>
+
+    <!-- NARASI TULISAN -->
+    <div class="story-box" id="storyText">
+      Memuat cerita...
+    </div>
+
+    <!-- TOMBOL PILIHAN -->
+    <div class="choices-box" id="choicesContainer"></div>
+
+    <!-- KONTROL -->
+    <div class="control-box">
+      <button class="btn-reset" onclick="resetGame()">🔄 Ulang Cerita dari Awal</button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // DATA CERITA NOVEL INTERAKTIF (Bisa Ditambah / Edit Sesuai Keinginan)
+    // =========================================================================
+    const storyData = {
+      start: {
+        text: "Malam makin larut. Jam dinding perpustakaan sekolah berdetik pelan. Di atas meja berdebu, kamu menemukan sebuah BUKU HITAM tanpa judul. Tiba-tiba, terdengar langkah kaki berat mendekat...",
+        image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=600",
+        choices: [
+          { text: "1. Sembunyi di balik rak buku sambil bawa bukunya.", target: "sembunyi_rak" },
+          { text: "2. Tetap berdiri di tempat dan menyapa orang itu.", target: "sapa_orang" },
+          { text: "3. Langsung lompat keluar lewat jendela belakang.", target: "lompat_jendela" }
+        ]
+      },
+
+      // --- JALUR A ---
+      sembunyi_rak: {
+        text: "Kamu menahan napas di balik deretan buku tua. Bayangan seseorang melintas... Itu Pak Roni, penjaga sekolah. Namun, tatapannya kosong dan dia memegang KUNCI KUNO berukir naga.",
+        image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=600",
+        choices: [
+          { text: "A. Ikuti Pak Roni secara diam-diam dari belakang.", target: "ikuti_roni" },
+          { text: "B. Periksa isi Buku Hitam tersebut di tempat aman.", target: "baca_buku", addItem: "Buku Hitam" }
+        ]
+      },
+      ikuti_roni: {
+        text: "Kamu mengendap-endap. Pak Roni membuka pintu rahasia menuju ruang bawah tanah yang selama ini terkunci! Kamu berhasil masuk sebelum pintunya tertutup kembali.\n\n[BERSAMBUNG - CHAPTER 2]",
+        image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600",
+        choices: [
+          { text: "🎮 Main Lagi dari Awal", target: "start" }
+        ]
+      },
+      baca_buku: {
+        text: "Kamu membuka halaman pertama. Buku itu berisi denah rahasia sekolah tahun 1920 dan foto seorang murid yang mukanya sangat mirip denganku!\n\n[ENDING: PEMEGANG RAHASIA]",
+        image: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?q=80&w=600",
+        choices: [
+          { text: "🎮 Main Lagi dari Awal", target: "start" }
+        ]
+      },
+
+      // --- JALUR B ---
+      sapa_orang: {
+        text: "'Siapa di sana?' panggilmu. Sosok itu melangkah masuk. Ternyata Maya, teman sekelasmu! Wajahnya pucat dan napasnya terengah-engah.\n\nMAYA: 'Kamu harus lari! Tempat ini bahaya!'",
+        image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600",
+        choices: [
+          { text: "A. Tanya Maya apa yang sebenarnya terjadi.", target: "tanya_maya" },
+          { text: "B. Serahkan Buku Hitam yang kamu temukan ke Maya.", target: "serahkan_buku" }
+        ]
+      },
+      tanya_maya: {
+        text: "Maya menarik tanganmu. Dari jendela, kamu melihat sosok-sosok jubah hitam mengepung area perpustakaan. Keduanya terjebak bersama!\n\n[BERSAMBUNG - CHAPTER 2]",
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
+        choices: [
+          { text: "🎮 Main Lagi dari Awal", target: "start" }
+        ]
+      },
+      serahkan_buku: {
+        text: "Senyum Maya berubah aneh. Dia mengambil buku itu lalu mendorongmu hingga terjatuh, lalu menguncimu dari luar perpustakaan!\n\n[BAD ENDING: DIKHIANATI]",
+        image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=600",
+        damage: 30,
+        choices: [
+          { text: "🎮 Coba Lagi", target: "start" }
+        ]
+      },
+
+      // --- JALUR C ---
+      lompat_jendela: {
+        text: "Kamu melompat keluar! BUKK! Kamu mendarat di rumput basah. Buku hitam terlepas dan terbuka. Tiba-tiba halaman tua itu mengeluarkan cahaya kebiruan yang aneh.",
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
+        damage: 10,
+        choices: [
+          { text: "A. Ambil bukunya lalu lari menuju gerbang utama.", target: "lari_gerbang", addItem: "Buku Berkilau" },
+          { text: "B. Sentuh simbol bersinar yang ada di dalam halaman buku.", target: "sentuh_simbol" }
+        ]
+      },
+      lari_gerbang: {
+        text: "Kamu berhasil keluar dari area sekolah! Tetapi simbol di dalam buku mulai muncul secara gaib di kulit lenganmu...",
+        image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600",
+        choices: [
+          { text: "🎮 Main Lagi dari Awal", target: "start" }
+        ]
+      },
+      sentuh_simbol: {
+        text: "Cahaya menyilaukan menyerap kesadaranmu. Kamu terlempar ke masa lalu dan menyaksikan peristiwa sejarah perpustakaan ini 50 tahun lalu!\n\n[ENDING: PENJELAJAH WAKTU]",
+        image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=600",
+        choices: [
+          { text: "🎮 Main Lagi dari Awal", target: "start" }
+        ]
+      }
+    };
+
+    // =========================================================================
+    // GAME ENGINE & STATE MANAGEMENT
+    // =========================================================================
+    let playerState = {
+      currentNode: 'start',
+      hp: 100,
+      inventory: []
+    };
+
+    const storyTextEl = document.getElementById('storyText');
+    const choicesContainerEl = document.getElementById('choicesContainer');
+    const sceneImgEl = document.getElementById('sceneImg');
+    const hpValueEl = document.getElementById('hpValue');
+    const itemValueEl = document.getElementById('itemValue');
+
+    let typewriterTimer = null;
+
+    function initGame() {
+      const savedState = localStorage.getItem('novel_save');
+      if (savedState) {
+        playerState = JSON.parse(savedState);
+      }
+      renderNode(playerState.currentNode);
+    }
+
+    function renderNode(nodeId) {
+      const node = storyData[nodeId];
+      if (!node) return;
+
+      playerState.currentNode = nodeId;
+
+      // Update Damage jika ada
+      if (node.damage) {
+        playerState.hp = Math.max(0, playerState.hp - node.damage);
+      }
+
+      // Update Item jika ada
+      if (node.addItem && !playerState.inventory.includes(node.addItem)) {
+        playerState.inventory.push(node.addItem);
+      }
+
+      // Simpan Kemajuan
+      localStorage.setItem('novel_save', JSON.stringify(playerState));
+
+      // Update UI Status
+      hpValueEl.innerText = playerState.hp;
+      itemValueEl.innerText = playerState.inventory.length > 0 ? playerState.inventory.join(', ') : 'Kosong';
+
+      // Update Gambar
+      if (node.image) {
+        sceneImgEl.src = node.image;
+      }
+
+      // Efek Mengetik Teks Narasi
+      typeWriterEffect(node.text, () => {
+        // Tampilkan Tombol Pilihan setelah selesai mengetik
+        renderChoices(node.choices);
+      });
+    }
+
+    function typeWriterEffect(text, onComplete) {
+      clearInterval(typewriterTimer);
+      storyTextEl.innerText = '';
+      choicesContainerEl.innerHTML = ''; // Sembunyikan tombol saat mengetik
+
+      let index = 0;
+      typewriterTimer = setInterval(() => {
+        if (index < text.length) {
+          storyTextEl.innerText += text.charAt(index);
+          index++;
+        } else {
+          clearInterval(typewriterTimer);
+          if (onComplete) onComplete();
+        }
+      }, 25);
+    }
+
+    function renderChoices(choices) {
+      choicesContainerEl.innerHTML = '';
+      choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-choice';
+        btn.innerText = choice.text;
+        btn.onclick = () => renderNode(choice.target);
+        choicesContainerEl.appendChild(btn);
+      });
+    }
+
+    function resetGame() {
+      localStorage.removeItem('novel_save');
+      playerState = { currentNode: 'start', hp: 100, inventory: [] };
+      renderNode('start');
+    }
+
+    // Jalankan Game
+    initGame();
+  </script>
+</body>
+</html>
