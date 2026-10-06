@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Novel Interaktif - Misteri Perpustakaan Tua</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <title>Sketsa Dua Warna - Novel Interaktif Romantis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -14,9 +14,9 @@
     }
 
     body {
-      background-color: #0b0813;
-      color: #e0e0e0;
-      font-family: 'VT323', monospace;
+      background: #121016;
+      color: #f0e6ed;
+      font-family: 'Poppins', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -24,283 +24,267 @@
       padding: 15px;
     }
 
-    /* CONTAINER UTAMA GAME */
+    /* CONTAINER UTAMA */
     .game-container {
       width: 100%;
       max-width: 600px;
-      background: #161124;
-      border: 4px solid #8a2be2;
-      box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
-      border-radius: 10px;
-      padding: 20px;
+      background: #1e1926;
+      border: 1px solid #4a3b59;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 18px;
     }
 
-    /* HEADER STATUS (HP & INVENTARIS) */
+    /* HEADER LOVE METER */
     .status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 8px 12px;
-      border: 2px solid #332255;
-      border-radius: 6px;
-      font-size: 1.2rem;
-      color: #00ffcc;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(230, 126, 150, 0.2);
+      font-size: 0.95rem;
+      color: #ff9ebb;
+      font-weight: 600;
     }
 
-    /* TAMPILAN GAMBAR ADEGAN */
+    /* GAMBAR ADEGAN */
     .scene-image-box {
       width: 100%;
-      height: 200px;
-      border: 2px solid #8a2be2;
-      border-radius: 6px;
+      height: 220px;
+      border-radius: 12px;
       overflow: hidden;
       background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border: 1px solid #3d2f4a;
     }
 
     .scene-image-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: opacity 0.5s ease;
     }
 
-    /* KOTAK NARASI TULISAN */
+    /* KOTAK NARASI */
     .story-box {
-      background: rgba(0, 0, 0, 0.6);
-      border: 2px solid #4d2d80;
-      padding: 15px;
-      border-radius: 6px;
-      min-height: 120px;
-      font-size: 1.3rem;
-      line-height: 1.4;
-      color: #fff;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid #362942;
+      padding: 18px;
+      border-radius: 12px;
+      min-height: 130px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #f5ebf2;
     }
 
-    /* DAFTAR TOMBOL PILIHAN */
+    /* TOMBOL PILIHAN */
     .choices-box {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .btn-choice {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.65rem;
-      padding: 12px 15px;
-      background: #25183e;
-      color: #00ffcc;
-      border: 2px solid #00ffcc;
-      border-radius: 6px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 14px 18px;
+      background: #2a2035;
+      color: #e6b8cb;
+      border: 1px solid #ff9ebb;
+      border-radius: 10px;
       cursor: pointer;
       text-align: left;
-      line-height: 1.5;
-      transition: all 0.2s ease;
+      line-height: 1.4;
+      transition: all 0.25s ease;
     }
 
     .btn-choice:hover, .btn-choice:active {
-      background: #8a2be2;
-      color: #fff;
-      border-color: #fff;
-      transform: translateX(4px);
+      background: #ff9ebb;
+      color: #121016;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 158, 187, 0.3);
     }
 
-    /* KONTROL RESTART */
+    /* RESTART */
     .control-box {
       display: flex;
       justify-content: flex-end;
     }
 
     .btn-reset {
-      font-family: 'VT323', monospace;
-      font-size: 1.1rem;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
       background: transparent;
-      color: #ff3366;
+      color: #a38ba0;
       border: none;
       cursor: pointer;
       text-decoration: underline;
+    }
+
+    .btn-reset:hover {
+      color: #ff9ebb;
     }
   </style>
 </head>
 <body>
 
   <div class="game-container">
-    <!-- BAR STATUS -->
+    <!-- BAR STATUS KEDEKATAN -->
     <div class="status-bar">
-      <span>❤️ HP: <span id="hpValue">100</span></span>
-      <span>🎒 Item: <span id="itemValue">Kosong</span></span>
+      <span>📖 Sketsa Dua Warna</span>
+      <span>❤️ Kedekatan: <span id="loveMeter">0</span>%</span>
     </div>
 
     <!-- GAMBAR ADEGAN -->
     <div class="scene-image-box">
-      <img id="sceneImg" src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=600" alt="Adegan Game">
+      <img id="sceneImg" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=600" alt="Visual Cerita">
     </div>
 
-    <!-- NARASI TULISAN -->
+    <!-- NARASI TEKS -->
     <div class="story-box" id="storyText">
       Memuat cerita...
     </div>
 
-    <!-- TOMBOL PILIHAN -->
+    <!-- PILIHAN INTERAKSI -->
     <div class="choices-box" id="choicesContainer"></div>
 
-    <!-- KONTROL -->
+    <!-- RESTART -->
     <div class="control-box">
-      <button class="btn-reset" onclick="resetGame()">🔄 Ulang Cerita dari Awal</button>
+      <button class="btn-reset" onclick="resetGame()">🔄 Ulangi Cerita</button>
     </div>
   </div>
 
   <script>
     // =========================================================================
-    // DATA CERITA NOVEL INTERAKTIF (Bisa Ditambah / Edit Sesuai Keinginan)
+    // ALUR CERITA ROMANTIS: ARIS & LUNA
     // =========================================================================
     const storyData = {
       start: {
-        text: "Malam makin larut. Jam dinding perpustakaan sekolah berdetik pelan. Di atas meja berdebu, kamu menemukan sebuah BUKU HITAM tanpa judul. Tiba-tiba, terdengar langkah kaki berat mendekat...",
-        image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=600",
+        text: "Aroma kopi Arabika menyeruak di kafe 'Selaras'. Kamu (Aris) sedang sibuk dengan cetak biru bangunan di laptopmu. Tiba-tiba pintu kafe terbuka. Luna, seorang ilustrator dengan jaket denim yang agak basah karena hujan, masuk membawa buku sketsa besar. Tempat duduk penuh, kecuali satu kursi di depan mejamu.\n\n'Permisi... boleh saya duduk di sini?' tanya Luna ragu.",
+        image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=600",
         choices: [
-          { text: "1. Sembunyi di balik rak buku sambil bawa bukunya.", target: "sembunyi_rak" },
-          { text: "2. Tetap berdiri di tempat dan menyapa orang itu.", target: "sapa_orang" },
-          { text: "3. Langsung lompat keluar lewat jendela belakang.", target: "lompat_jendela" }
+          { text: "A. Tersenyum tipis dan menutup sedikit laptop. 'Silakan, duduk saja.'", target: "ramah_2a", love: 20 },
+          { text: "B. Mengangguk kaku tanpa ekspresi lalu kembali menatap laptop.", target: "dingin_2b", love: 0 }
         ]
       },
 
-      // --- JALUR A ---
-      sembunyi_rak: {
-        text: "Kamu menahan napas di balik deretan buku tua. Bayangan seseorang melintas... Itu Pak Roni, penjaga sekolah. Namun, tatapannya kosong dan dia memegang KUNCI KUNO berukir naga.",
-        image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=600",
+      // --- JALUR A (RAMAH) ---
+      ramah_2a: {
+        text: "Luna tersenyum lega lalu duduk. Percakapan mengalir hangat seiring rintik hujan di luar. Kamu mengagumi ilustrasi cat airnya yang penuh warna, sementara Luna terpesona dengan cetak birumu yang terstruktur.\n\nSebelum berpisah, kamu memberanikan diri meminta nomor teleponnya, dan Luna mempercayaikannya padamu dengan binar mata bahagia.",
+        image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=600",
         choices: [
-          { text: "A. Ikuti Pak Roni secara diam-diam dari belakang.", target: "ikuti_roni" },
-          { text: "B. Periksa isi Buku Hitam tersebut di tempat aman.", target: "baca_buku", addItem: "Buku Hitam" }
-        ]
-      },
-      ikuti_roni: {
-        text: "Kamu mengendap-endap. Pak Roni membuka pintu rahasia menuju ruang bawah tanah yang selama ini terkunci! Kamu berhasil masuk sebelum pintunya tertutup kembali.\n\n[BERSAMBUNG - CHAPTER 2]",
-        image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600",
-        choices: [
-          { text: "🎮 Main Lagi dari Awal", target: "start" }
-        ]
-      },
-      baca_buku: {
-        text: "Kamu membuka halaman pertama. Buku itu berisi denah rahasia sekolah tahun 1920 dan foto seorang murid yang mukanya sangat mirip denganku!\n\n[ENDING: PEMEGANG RAHASIA]",
-        image: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?q=80&w=600",
-        choices: [
-          { text: "🎮 Main Lagi dari Awal", target: "start" }
+          { text: "Lanjutkan ke 3 Bulan Kemudian...", target: "proyek_3" }
         ]
       },
 
-      // --- JALUR B ---
-      sapa_orang: {
-        text: "'Siapa di sana?' panggilmu. Sosok itu melangkah masuk. Ternyata Maya, teman sekelasmu! Wajahnya pucat dan napasnya terengah-engah.\n\nMAYA: 'Kamu harus lari! Tempat ini bahaya!'",
-        image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600",
+      // --- JALUR B (DINGIN) ---
+      dingin_2b: {
+        text: "Keheningan canggung menyelimuti meja. Luna yang merasa tak enak hati mencoba melukis, namun sikutnya menyenggol cangkir kopi hingga tumpah membasahi cetak biru penting milikmu!\n\n'Ya ampun! Maaf! Maaf sekali!' seru Luna panik.",
+        image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=600",
         choices: [
-          { text: "A. Tanya Maya apa yang sebenarnya terjadi.", target: "tanya_maya" },
-          { text: "B. Serahkan Buku Hitam yang kamu temukan ke Maya.", target: "serahkan_buku" }
+          { text: "A. Menghela napas panjang. 'Sudahlah, nasib buruk. Lain kali hati-hati.'", target: "maaf_2b", love: 5 },
+          { text: "B. Menatapnya dingin. 'Ganti rugi tak bisa mengembalikan waktu yang terbuang.'", target: "marah_2b", love: -10 }
         ]
       },
-      tanya_maya: {
-        text: "Maya menarik tanganmu. Dari jendela, kamu melihat sosok-sosok jubah hitam mengepung area perpustakaan. Keduanya terjebak bersama!\n\n[BERSAMBUNG - CHAPTER 2]",
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
+      maaf_2b: {
+        text: "Kamu membereskan kertas basah itu lalu pergi. Luna menatap kepergianmu dengan rasa bersalah yang mendalam...",
+        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600",
         choices: [
-          { text: "🎮 Main Lagi dari Awal", target: "start" }
+          { text: "Lanjutkan ke 3 Bulan Kemudian...", target: "proyek_3" }
         ]
       },
-      serahkan_buku: {
-        text: "Senyum Maya berubah aneh. Dia mengambil buku itu lalu mendorongmu hingga terjatuh, lalu menguncimu dari luar perpustakaan!\n\n[BAD ENDING: DIKHIANATI]",
-        image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=600",
-        damage: 30,
+      marah_2b: {
+        text: "Luna menunduk malu dan langsung meninggalkan kafe. Pertemuan pertama kalian berakhir buruk.",
+        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600",
         choices: [
-          { text: "🎮 Coba Lagi", target: "start" }
+          { text: "Lanjutkan ke 3 Bulan Kemudian...", target: "proyek_3" }
         ]
       },
 
-      // --- JALUR C ---
-      lompat_jendela: {
-        text: "Kamu melompat keluar! BUKK! Kamu mendarat di rumput basah. Buku hitam terlepas dan terbuka. Tiba-tiba halaman tua itu mengeluarkan cahaya kebiruan yang aneh.",
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
-        damage: 10,
+      // --- PERTEMUAN KEMBALI ---
+      proyek_3: {
+        text: "Tiga bulan berlalu. Kamu memenangkan proyek galeri seni besar, namun klien meminta lukisan mural raksasa di lobi. Saat rapat gabungan, pintu terbuka dan seniman yang ditunjuk masuk.\n\nGadis itu adalah Luna. Mata kalian saling bertemu dalam rasa terkejut.",
+        image: "https://images.unsplash.com/photo-1561214115-f2f134cc4912?q=80&w=600",
         choices: [
-          { text: "A. Ambil bukunya lalu lari menuju gerbang utama.", target: "lari_gerbang", addItem: "Buku Berkilau" },
-          { text: "B. Sentuh simbol bersinar yang ada di dalam halaman buku.", target: "sentuh_simbol" }
+          { text: "Mulai mengerjakan proyek mural bersama...", target: "malam_4" }
         ]
       },
-      lari_gerbang: {
-        text: "Kamu berhasil keluar dari area sekolah! Tetapi simbol di dalam buku mulai muncul secara gaib di kulit lenganmu...",
-        image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600",
+
+      // --- KONFLIK & MENTORSHIP ---
+      malam_4: {
+        text: "Suatu malam di lokasi proyek yang sepi, perdebatan terjadi. Kamu ingin gaya mural geometris yang rapi, sedangkan Luna ingin warna emosional yang bebas.\n\n'Aris, jika aku mengikuti garis mimpimu, mural ini kehilangan jiwanya,' bisik Luna. Jarak kalian sangat dekat, hingga deru napasnya terasa di pipimu.",
+        image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=600",
         choices: [
-          { text: "🎮 Main Lagi dari Awal", target: "start" }
+          { text: "A. Turunkan ego dan pegang tangannya. 'Kita gabungkan... garisku dan warnamu.'", target: "ending_cinta", love: 40 },
+          { text: "B. Mundur selangkah. 'Kita bahas ini besok dengan kepala dingin.'", target: "ending_profesional", love: 10 }
         ]
       },
-      sentuh_simbol: {
-        text: "Cahaya menyilaukan menyerap kesadaranmu. Kamu terlempar ke masa lalu dan menyaksikan peristiwa sejarah perpustakaan ini 50 tahun lalu!\n\n[ENDING: PENJELAJAH WAKTU]",
-        image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=600",
+
+      // --- ENDING A ---
+      ending_cinta: {
+        text: "Malam itu berakhir dengan momen manis. Saat galeri resmi dibuka, mural karya kalian memukau semua pengunjung.\n\nDi bawah lukisan itu, kamu menyerahkan kotak kecil berisi cincin perak ukir berpendar batu opal. Luna menerima lamaranmu dengan air mata bahagia.\n\n[HAPPY ENDING: DUA WARNA MENJADI SATU]",
+        image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=600",
         choices: [
-          { text: "🎮 Main Lagi dari Awal", target: "start" }
+          { text: "🎮 Mainkan Ulang Cerita", target: "start" }
+        ]
+      },
+
+      // --- ENDING B ---
+      ending_profesional: {
+        text: "Proyek galeri selesai dengan sukses dan mendapat banyak pujian. Namun hubungan kalian tetap profesional. Ada rasa penasaran dan kehangatan yang tertunda di antara kalian yang belum sempat terungkap.\n\n[NORMAL ENDING: AWAL DARI KISAH BARU]",
+        image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=600",
+        choices: [
+          { text: "🎮 Mainkan Ulang Cerita", target: "start" }
         ]
       }
     };
 
     // =========================================================================
-    // GAME ENGINE & STATE MANAGEMENT
+    // ENGINE
     // =========================================================================
-    let playerState = {
+    let gameState = {
       currentNode: 'start',
-      hp: 100,
-      inventory: []
+      love: 0
     };
 
     const storyTextEl = document.getElementById('storyText');
     const choicesContainerEl = document.getElementById('choicesContainer');
     const sceneImgEl = document.getElementById('sceneImg');
-    const hpValueEl = document.getElementById('hpValue');
-    const itemValueEl = document.getElementById('itemValue');
-
+    const loveMeterEl = document.getElementById('loveMeter');
     let typewriterTimer = null;
 
     function initGame() {
-      const savedState = localStorage.getItem('novel_save');
-      if (savedState) {
-        playerState = JSON.parse(savedState);
+      const saved = localStorage.getItem('romance_save');
+      if (saved) {
+        gameState = JSON.parse(saved);
       }
-      renderNode(playerState.currentNode);
+      renderNode(gameState.currentNode);
     }
 
     function renderNode(nodeId) {
       const node = storyData[nodeId];
       if (!node) return;
 
-      playerState.currentNode = nodeId;
-
-      // Update Damage jika ada
-      if (node.damage) {
-        playerState.hp = Math.max(0, playerState.hp - node.damage);
+      gameState.currentNode = nodeId;
+      
+      if (node.love !== undefined) {
+        gameState.love = Math.max(0, Math.min(100, gameState.love + node.love));
       }
 
-      // Update Item jika ada
-      if (node.addItem && !playerState.inventory.includes(node.addItem)) {
-        playerState.inventory.push(node.addItem);
-      }
+      localStorage.setItem('romance_save', JSON.stringify(gameState));
+      loveMeterEl.innerText = gameState.love;
 
-      // Simpan Kemajuan
-      localStorage.setItem('novel_save', JSON.stringify(playerState));
-
-      // Update UI Status
-      hpValueEl.innerText = playerState.hp;
-      itemValueEl.innerText = playerState.inventory.length > 0 ? playerState.inventory.join(', ') : 'Kosong';
-
-      // Update Gambar
       if (node.image) {
         sceneImgEl.src = node.image;
       }
 
-      // Efek Mengetik Teks Narasi
       typeWriterEffect(node.text, () => {
-        // Tampilkan Tombol Pilihan setelah selesai mengetik
         renderChoices(node.choices);
       });
     }
@@ -308,7 +292,7 @@
     function typeWriterEffect(text, onComplete) {
       clearInterval(typewriterTimer);
       storyTextEl.innerText = '';
-      choicesContainerEl.innerHTML = ''; // Sembunyikan tombol saat mengetik
+      choicesContainerEl.innerHTML = '';
 
       let index = 0;
       typewriterTimer = setInterval(() => {
@@ -319,7 +303,7 @@
           clearInterval(typewriterTimer);
           if (onComplete) onComplete();
         }
-      }, 25);
+      }, 20);
     }
 
     function renderChoices(choices) {
@@ -334,12 +318,11 @@
     }
 
     function resetGame() {
-      localStorage.removeItem('novel_save');
-      playerState = { currentNode: 'start', hp: 100, inventory: [] };
+      localStorage.removeItem('romance_save');
+      gameState = { currentNode: 'start', love: 0 };
       renderNode('start');
     }
 
-    // Jalankan Game
     initGame();
   </script>
 </body>
